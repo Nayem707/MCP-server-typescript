@@ -1,0 +1,195 @@
+###
+# MCP Server API Requests
+# Use with VS Code REST Client extension or copy to Postman
+###
+
+@baseUrl = http://localhost:3000
+
+### Health Check
+GET {{baseUrl}}/health
+
+### List All Available Tools
+GET {{baseUrl}}/tools
+
+### ========================================
+### Sum Tool Examples
+### ========================================
+
+### Sum Tool - Basic Addition
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "sum",
+  "input": {
+    "a": 10,
+    "b": 25
+  }
+}
+
+### Sum Tool - Negative Numbers
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "sum",
+  "input": {
+    "a": -15,
+    "b": 40
+  }
+}
+
+### Sum Tool - Decimals
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "sum",
+  "input": {
+    "a": 3.14,
+    "b": 2.86
+  }
+}
+
+### Sum Tool - Large Numbers
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "sum",
+  "input": {
+    "a": 1000000,
+    "b": 2500000
+  }
+}
+
+### ========================================
+### GetUser Tool Examples
+### ========================================
+
+### GetUser Tool - User ID 1 (Admin)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "getUser",
+  "input": {
+    "id": 1
+  }
+}
+
+### GetUser Tool - User ID 2 (Regular User)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "getUser",
+  "input": {
+    "id": 2
+  }
+}
+
+### GetUser Tool - User ID 3 (Another User)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "getUser",
+  "input": {
+    "id": 3
+  }
+}
+
+### GetUser Tool - Non-existent User
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "getUser",
+  "input": {
+    "id": 999
+  }
+}
+
+### ========================================
+### Error Examples (Expected to Fail)
+### ========================================
+
+### Error - Tool Not Found
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "nonExistentTool",
+  "input": {}
+}
+
+### Error - Missing Required Field
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "sum",
+  "input": {
+    "a": 10
+  }
+}
+
+### Error - Wrong Type (String instead of Number)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "sum",
+  "input": {
+    "a": "hello",
+    "b": 25
+  }
+}
+
+### Error - Invalid ID (Negative)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "getUser",
+  "input": {
+    "id": -5
+  }
+}
+
+### Error - Invalid ID (Zero)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "getUser",
+  "input": {
+    "id": 0
+  }
+}
+
+### Error - Missing Tool Field
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "input": {
+    "a": 10,
+    "b": 20
+  }
+}
+
+### Error - Missing Input Field
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "tool": "sum"
+}
+
+### Error - Empty Body
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{}
